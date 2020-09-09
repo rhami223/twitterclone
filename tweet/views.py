@@ -6,15 +6,17 @@ from .models import TweetModel
 
 from notification.models import NotificationModel
 from twitteruser.models import TwitterUser
-
+from django.views.generic import TemplateView
 import re
 
 # Create your views here.
 
+class CreateTweet(TemplateView):
+  def get(self, request):
+    form = TweetForm()
+    return render(request, 'tweet.html', {'form': form})
 
-@login_required
-def create_tweet(request):
-  if request.method == "POST":
+  def post(self, request):
     form = TweetForm(request.POST)
     if form.is_valid():
       data = form.cleaned_data
@@ -33,10 +35,13 @@ def create_tweet(request):
             tweet=new_tweet,
             user = TwitterUser.objects.get(username=at),)
       return HttpResponseRedirect(reverse('homepage'))
-  form = TweetForm()
-  return render(request, 'tweet.html', {'form': form})
 
 
-def tweet_view(request, tweet_id):
-  tweet = TweetModel.objects.get(id=tweet_id)
-  return render(request, 'tweet_view.html', {'tweet': tweet})
+
+
+  class TwitterView(TemplateView):
+    def get(self, request, tweet_id):
+      tweet = TweetModel.objects.get(id=tweet_id)
+      return render(request, ‘tweet_view.html’, {‘tweet’: tweet})
+
+
