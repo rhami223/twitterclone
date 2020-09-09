@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body style="background:black">
+<h1 style="color:chartreuse">Welcome To Twitter Clone</h1>
+<a href="/profile/{{ user.id }}/" style="color:cyan">Profile</a>
+<a href="/tweet/" style="color:cyan">Tweet Away</a>
+<a href="/notifications/{{ user.id }}/" style="color:cyan">Notifications {{count}}</a>
+{% for tweet in tweets %}
+<ul style="color:greenyellow">
+  <a href="/profile/{{ tweet.posted_by.id }}/" style="color:cyan">@{{ tweet.posted_by }}</a> 
+  <a href="/tweet/{{ tweet.id }}/" style="color:cyan">{{ tweet.date_filed }}</a>
+  {{tweet.text}}
+</ul>
+{% endfor %}
+<a href="/logout/" style="color:gold">Logout</a>
+</body>
+
+{% endblock content %}

@@ -1,0 +1,8 @@
+{% for tweet in tweets %}
+<div class="card shadow p-3 mb-5 bg-white rounded" style="width: 30rem;">
+    <div class="card-body">
+      <h5 class="card-title"><a href="/{{tweet.user.username}}/">@{{tweet.user.username}}</a><a href="/tweet_detail/{{tweet.id}}/">-{{tweet.posted_on}}</a> </h5>
+      <p class="card-text">{{tweet.text}}</p>
+    </div>
+</div>
+{% endfor%}
